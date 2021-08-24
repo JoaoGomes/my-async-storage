@@ -8,7 +8,7 @@ export default function App() {
 		try {
 			const value = {id: 1, msg: 'Algum texto'};
 			const jsonValue = JSON.stringify(value);
-			await AsyncStorage.setItem('@storage_Key', jsonVAlue);
+			await AsyncStorage.setItem('@storage_Key', jsonValue);
 	} catch (e) {
 		console.log(e);
 	}
