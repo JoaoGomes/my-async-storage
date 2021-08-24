@@ -1,21 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Button }  from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+	const [data, setData] = useState();
+	async function onSaveAsync()  {
+		try {
+			const value = {id: 1, msg: 'Algum texto'};
+			const jsonValue = JSON.stringify(value);
+			await AsyncStorage.setItem('@storage_Key', jsonVAlue);
+	} catch (e) {
+		console.log(e);
+	}
+}
+
+async function onReadAsync() {
+	try {
+		const jsonValue = await AsyncStorage.getItem('@storage_Key')
+		setData(jsonValue);
+	} catch(e) {
+		console.log(e);
+	}
+}
+
+return (
+	<View style={styles.container}>
+		<Text>Async Storage</Text>
+		<Button onPress={onSaveAsync} title="Salvar" color="#841584" />
+		<Button onPress={onReadAsync} title="Ler" color="#45AA89"/>
+		{ data && <Text>{data}</Text> }
+	</View>
+);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+	container: {
+		flex: 1,
+		backgroundColor: '#fff',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
 });
